@@ -23,7 +23,9 @@ It consists of a **React + TypeScript** web app, a **Google ADK SequentialAgent*
 **Data Management:** 
 - Work orders: Loaded from JSON file (`workOrders.json`) client-side
 - Permits: Stored in browser localStorage after generation
-- **Only API call:** `POST /sequential/execute` to Cloud Run agent for permit generation
+- **API calls:** Two-step process to Google ADK agent:
+  1. Create/update session: `POST /apps/{app_name}/users/{user_id}/sessions/{session_id}`
+  2. Run agent: `POST /run_sse` with work order prompt
 
 ### 3.1 Design System
 
@@ -65,7 +67,9 @@ It consists of a **React + TypeScript** web app, a **Google ADK SequentialAgent*
 **Data Source:** Work order from JSON file; Hazards/Permits from localStorage after generation
 **Actions:** Generate Permits (disabled if In-Progress/Completed), View Permits
 **Progress:** 4-step indicator (Hazards → Permits → Validation → Refinement)
-**API Call:** `POST /sequential/execute` to Cloud Run agent with `{ workOrderId }`
+**API Calls:** 
+1. `POST /apps/{app_name}/users/{user_id}/sessions/{session_id}` - Create/update session
+2. `POST /run_sse` - Run agent with work order prompt
 
 #### 3.2.3 Permits List (`/workorders/:id/permits`)
 **Table:** Permit ID, Type (Badge), Status (Draft/Pending/Approved), Validation (Pass/Warn/Fail), Warnings count, PDF link, Actions
@@ -87,10 +91,18 @@ It consists of a **React + TypeScript** web app, a **Google ADK SequentialAgent*
 
 1. **Work Orders:** Load `workOrders.json` on app initialization → Display in Dashboard
 2. **Permit Generation:** 
-   - User clicks "Generate Permits" → `POST /sequential/execute` to Cloud Run agent
-   - Agent returns hazards, permits, validations → Save to localStorage
+   - User clicks "Generate Permits" → Two-step API process:
+     a. Create/update session: `POST /apps/{app_name}/users/{user_id}/sessions/{session_id}` with session metadata
+     b. Run agent: `POST /run_sse` with prompt containing workOrderId
+   - Agent returns execution events with structured data (hazards, permits, validations)
+   - Parse events and extract structured response → Save to localStorage
    - Update work order status in memory/localStorage
 3. **Permit Management:** All permit CRUD operations use localStorage (no backend API)
+
+**Session Management:**
+- `user_id`: Generated once per browser, stored in localStorage (`permitflow_user_id`)
+- `session_id`: Generated per work order, stored in localStorage (`permitflow_session_{workOrderId}`)
+- Session data includes: `preferred_language`, `visit_count`, `workOrderId`, `lastAccessed`
 
 ### 3.4 Key Components
 - **DataTable:** Sortable, filterable, paginated tables
@@ -104,24 +116,92 @@ It consists of a **React + TypeScript** web app, a **Google ADK SequentialAgent*
 - Work orders: In-memory from JSON file
 - Permits: localStorage (key: `permits_${workOrderId}`)
 - Status tracking: localStorage (key: `wo_status_${workOrderId}`)
-**API Integration:** Single endpoint - Cloud Run agent for permit generation only
+**API Integration:** Google ADK agent API with two-step process:
+- Session management endpoint for state initialization
+- Agent execution endpoint (`/run_sse`) for permit generation
+- Environment variables: `VITE_API_BASE_URL`, `VITE_APP_NAME`, `VITE_AUTH_TOKEN` (optional)
 
 ---
 
 ## 4) Agentic System (Google ADK on Cloud Run)
 
-**Service:** `sequential-agent`
-**Endpoint:** `POST /sequential/execute`
-**Input:** `{ "workOrderId": "WO-87231" }`
-**Output:**
+**Service:** `sequential-agent` (Google ADK agent)
+**API Pattern:** Two-step process following Google ADK agent API
 
+### 4.1 Session Management
+
+**Endpoint:** `POST /apps/{app_name}/users/{user_id}/sessions/{session_id}`
+
+**Headers:**
+- `Authorization: Bearer {token}` (if authentication required)
+- `Content-Type: application/json`
+
+**Request Body:**
+```json
+{
+  "preferred_language": "English",
+  "visit_count": 1,
+  "workOrderId": "WO-87231",
+  "lastAccessed": "2024-01-15T10:00:00Z"
+}
+```
+
+**Purpose:** Initialize or update session state for user/work order combination.
+
+### 4.2 Agent Execution
+
+**Endpoint:** `POST /run_sse`
+
+**Headers:**
+- `Authorization: Bearer {token}` (if authentication required)
+- `Content-Type: application/json`
+
+**Request Body:**
+```json
+{
+  "app_name": "sequential-agent",
+  "user_id": "user_123",
+  "session_id": "session_abc",
+  "new_message": {
+    "role": "user",
+    "parts": [{
+      "text": "Generate permits for work order WO-87231"
+    }]
+  },
+  "streaming": false
+}
+```
+
+**Response:** Array of agent execution events containing structured output:
+```json
+[
+  {
+    "type": "agent_response",
+    "data": {
+      "hazards": [...],
+      "permits": [...],
+      "validations": [...],
+      "pdfLinks": [...],
+      "runMeta": {
+        "policyVersion": "v1.0",
+        "ragSnapshot": "2024-01-15T10:00:00Z"
+      }
+    }
+  }
+]
+```
+
+**Output Structure:**
 * `hazards[]` (name, confidence, rationale, suggestedControls, evidence)
 * `permits[]` (permitId, type, controls, PPE, signOffRoles, validityHours, attachmentsRequired, hazardsLinked) - refined through validation loop
 * `validations[]` (permitId, validationStatus, errors, warnings, recommendations, checks[]) - from final validation iteration
 * `pdfLinks[]`
 * `runMeta` (policyVersion, ragSnapshot)
 
-All sub-agents use **structured output (output schema)** with state management via `output_key` for inter-agent communication.
+**Notes:**
+- Set `"streaming": true` to receive Server-Sent Events (SSE) for real-time updates
+- All sub-agents use **structured output (output schema)** with state management via `output_key` for inter-agent communication
+- Frontend parses execution events to extract structured response data
 
 For more details refer `agent.md`
 

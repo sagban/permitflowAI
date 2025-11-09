@@ -45,7 +45,7 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
 };
 
 export const PermitViewer = () => {
-  const { id } = useParams<{ id: string }>();
+  const { workOrderId, permitId } = useParams<{ workOrderId: string; permitId: string }>();
   const navigate = useNavigate();
   const [permit, setPermit] = useState<Permit | null>(null);
   const [validation, setValidation] = useState<Validation | null>(null);
@@ -58,25 +58,25 @@ export const PermitViewer = () => {
   const [editedAttachments, setEditedAttachments] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!id) return;
+    if (!permitId || !workOrderId) return;
 
-    const foundPermit = storage.getPermit(id);
+    const foundPermit = storage.getPermit(permitId);
     if (foundPermit) {
       setPermit(foundPermit);
-      setEditedControls([...foundPermit.controls]);
-      setEditedPPE([...foundPermit.PPE]);
-      setEditedSignOffs([...foundPermit.signOffRoles]);
-      setEditedAttachments([...foundPermit.attachmentsRequired]);
+      setEditedControls(Array.isArray(foundPermit.controls) ? [...foundPermit.controls] : []);
+      setEditedPPE(Array.isArray(foundPermit.ppe) ? [...foundPermit.ppe] : []);
+      setEditedSignOffs(Array.isArray(foundPermit.signOffRoles) ? [...foundPermit.signOffRoles] : []);
+      setEditedAttachments(Array.isArray(foundPermit.attachmentsRequired) ? [...foundPermit.attachmentsRequired] : []);
 
-      const val = storage.getValidation(id);
+      // Load hazards from work order
+      const woHazards = storage.getHazards(workOrderId);
+      const hazardsLinked = Array.isArray(foundPermit.hazardsLinked) ? foundPermit.hazardsLinked : [];
+      setHazards(woHazards.filter(h => hazardsLinked.includes(h.name)));
+
+      const val = storage.getValidation(permitId);
       setValidation(val);
-
-      if (foundPermit.workOrderId) {
-        const woHazards = storage.getHazards(foundPermit.workOrderId);
-        setHazards(woHazards.filter(h => foundPermit.hazardsLinked.includes(h.name)));
-      }
     }
-  }, [id]);
+  }, [permitId, workOrderId]);
 
   const handleSave = () => {
     if (!permit) return;
@@ -84,7 +84,7 @@ export const PermitViewer = () => {
     const updatedPermit: Permit = {
       ...permit,
       controls: editedControls,
-      PPE: editedPPE,
+      ppe: editedPPE,
       signOffRoles: editedSignOffs,
       attachmentsRequired: editedAttachments,
     };
@@ -106,6 +106,7 @@ export const PermitViewer = () => {
     setApproveDialogOpen(false);
   };
 
+
   if (!permit) {
     return (
       <Box sx={{ p: 3 }}>
@@ -118,7 +119,7 @@ export const PermitViewer = () => {
     <Box sx={{ p: 3 }}>
       <Button
         startIcon={<ArrowBackIcon />}
-        onClick={() => navigate(`/workorders/${permit.workOrderId}/permits`)}
+        onClick={() => navigate(`/workorders/${workOrderId}/permits`)}
         sx={{ mb: 2 }}
       >
         Back to Permits
@@ -166,9 +167,15 @@ export const PermitViewer = () => {
                     Linked Hazards
                   </Typography>
                   <Box display="flex" gap={1} flexWrap="wrap" mb={2}>
-                    {hazards.map((hazard, idx) => (
-                      <Chip key={idx} label={hazard.name} size="small" />
-                    ))}
+                    {permit.hazardsLinked && permit.hazardsLinked.length > 0 ? (
+                      permit.hazardsLinked.map((hazardName, idx) => (
+                        <Chip key={idx} label={hazardName} size="small" />
+                      ))
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">
+                        No hazards linked
+                      </Typography>
+                    )}
                   </Box>
                 </Grid>
 
@@ -266,7 +273,7 @@ export const PermitViewer = () => {
                 >
                   Save Changes
                 </Button>
-                {permit.status === 'Pending' && validation?.validationStatus !== 'Fail' && (
+                {permit.status === 'Draft' && validation?.validationStatus !== 'Fail' && (
                   <Button
                     variant="contained"
                     color="success"

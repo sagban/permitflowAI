@@ -16,7 +16,7 @@ function App() {
           <Route path="/workorders" element={<Dashboard />} />
           <Route path="/workorders/:id" element={<WorkOrderDetail />} />
           <Route path="/workorders/:id/permits" element={<PermitsList />} />
-          <Route path="/permits/:id" element={<PermitViewer />} />
+          <Route path="/workorders/:workOrderId/permits/:permitId" element={<PermitViewer />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

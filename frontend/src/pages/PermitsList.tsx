@@ -8,7 +8,6 @@ import {
   Typography,
   Chip,
   Stack,
-  Link,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DataTable, Column } from '@/components/DataTable';
@@ -92,25 +91,13 @@ export const PermitsList = () => {
       },
     },
     {
-      id: 'pdfLink',
-      label: 'PDF',
-      render: (_, row) => {
-        // PDF links would come from the agent response
-        return (
-          <Link href="#" onClick={(e) => e.preventDefault()}>
-            View PDF
-          </Link>
-        );
-      },
-    },
-    {
       id: 'actions',
       label: 'Actions',
       render: (_, row) => (
         <Button
           size="small"
           variant="outlined"
-          onClick={() => navigate(`/permits/${row.permitId}`)}
+          onClick={() => navigate(`/workorders/${id}/permits/${row.permitId}`)}
         >
           Open
         </Button>
@@ -123,7 +110,7 @@ export const PermitsList = () => {
       const validation = storage.getValidation(permit.permitId);
       return {
         ...permit,
-        validation,
+        validation: validation || undefined,
         warningsCount: validation?.warnings.length || 0,
       };
     });

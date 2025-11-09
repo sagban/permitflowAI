@@ -18,11 +18,10 @@ import {
   Divider,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { WorkOrder, Hazard, Permit } from '@/types';
+import { WorkOrder, Hazard, Permit, AgentExecutionEvent } from '@/types';
 import { loadWorkOrders } from '@/utils/workOrders';
 import { storage } from '@/utils/storage';
 import { api } from '@/utils/api';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { ErrorAlert } from '@/components/ErrorAlert';
 import { StatusChip } from '@/components/StatusChip';
 
@@ -38,6 +37,8 @@ export const WorkOrderDetail = () => {
   const [error, setError] = useState<string | null>(null);
   const [errorOpen, setErrorOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [showLogs, setShowLogs] = useState(false);
+  const [streamingEvents, setStreamingEvents] = useState<AgentExecutionEvent[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -76,7 +77,15 @@ export const WorkOrderDetail = () => {
     setActiveStep(2);
 
     try {
-      const response = await api.executeSequentialAgent(id);
+      // Clear previous events
+      setStreamingEvents([]);
+      
+      // Handle streaming events for real-time updates
+      const onStreamEvent = (event: AgentExecutionEvent) => {
+        setStreamingEvents(prev => [...prev, event]);
+      };
+
+      const response = await api.executeSequentialAgent(id, onStreamEvent);
       
       storage.saveHazards(id, response.hazards);
       storage.savePermits(id, response.permits);
@@ -226,7 +235,7 @@ export const WorkOrderDetail = () => {
                 <Chip
                   key={permit.permitId}
                   label={`${permit.type} - ${permit.permitId}`}
-                  onClick={() => navigate(`/permits/${permit.permitId}`)}
+                  onClick={() => navigate(`/workorders/${id}/permits/${permit.permitId}`)}
                   sx={{ cursor: 'pointer' }}
                 />
               ))}
@@ -235,21 +244,114 @@ export const WorkOrderDetail = () => {
         </Card>
       )}
 
-      <Box display="flex" gap={2}>
-        <Button
-          variant="contained"
-          onClick={handleGeneratePermits}
-          disabled={loading || workOrder.status !== 'New'}
-        >
-          Generate Permits
-        </Button>
-        {permits.length > 0 && (
-          <Button
-            variant="outlined"
-            onClick={() => navigate(`/workorders/${id}/permits`)}
-          >
-            View All Permits
-          </Button>
+      <Box display="flex" gap={2} flexDirection="column">
+        <Box display="flex" gap={2}>
+          {permits.length === 0 && (
+            <Button
+              variant="contained"
+              onClick={handleGeneratePermits}
+              disabled={loading || workOrder.status !== 'New'}
+            >
+              Generate Permits
+            </Button>
+          )}
+          {permits.length > 0 && (
+            <Button
+              variant="outlined"
+              onClick={() => navigate(`/workorders/${id}/permits`)}
+            >
+              View All Permits
+            </Button>
+          )}
+        </Box>
+
+        {streamingEvents.length > 0 && (
+          <Box>
+            <Button
+              variant="text"
+              size="small"
+              onClick={() => setShowLogs(!showLogs)}
+              sx={{ mb: 1 }}
+            >
+              {showLogs ? 'Hide' : 'Show'} Logs ({streamingEvents.length} events)
+            </Button>
+            {showLogs && (
+              <Card variant="outlined" sx={{ mt: 1 }}>
+                <CardContent>
+                  <Typography variant="h3" gutterBottom>
+                    Execution Logs
+                  </Typography>
+                  <List dense sx={{ maxHeight: 400, overflow: 'auto' }}>
+                    {streamingEvents.map((event, index) => {
+                      const getEventDescription = (e: AgentExecutionEvent): string => {
+                        if (e.content?.parts) {
+                          for (const part of e.content.parts) {
+                            if (part.text) {
+                              return part.text;
+                            }
+                            if (part.functionCall) {
+                              return `Calling function: ${part.functionCall.name}${part.functionCall.args ? ` with args: ${JSON.stringify(part.functionCall.args)}` : ''}`;
+                            }
+                            if (part.functionResponse) {
+                              return `Function ${part.functionResponse.name} completed${part.functionResponse.response ? `: ${JSON.stringify(part.functionResponse.response)}` : ''}`;
+                            }
+                          }
+                        }
+                        if (e.author) {
+                          return `Agent: ${e.author}`;
+                        }
+                        return `Event ${index + 1}`;
+                      };
+
+                      const getEventType = (e: AgentExecutionEvent): string => {
+                        if (e.content?.parts) {
+                          for (const part of e.content.parts) {
+                            if (part.functionCall) return 'function_call';
+                            if (part.functionResponse) return 'function_response';
+                            if (part.text) return 'text';
+                          }
+                        }
+                        return 'event';
+                      };
+
+                      const eventType = getEventType(event);
+                      const description = getEventDescription(event);
+
+                      return (
+                        <ListItem key={index} sx={{ borderBottom: '1px solid', borderColor: 'divider' }}>
+                          <ListItemText
+                            primary={
+                              <Box display="flex" alignItems="center" gap={1}>
+                                <Chip
+                                  label={eventType}
+                                  size="small"
+                                  color={
+                                    eventType === 'function_call' ? 'primary' :
+                                    eventType === 'function_response' ? 'success' :
+                                    'default'
+                                  }
+                                />
+                                <Typography variant="body2" component="span">
+                                  {description}
+                                </Typography>
+                              </Box>
+                            }
+                            secondary={
+                              event.timestamp ? (
+                                <Typography variant="caption" color="text.secondary">
+                                  {new Date(event.timestamp * 1000).toLocaleTimeString()}
+                                </Typography>
+                              ) : null
+                            }
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </CardContent>
+              </Card>
+            )}
+          </Box>
         )}
       </Box>
 

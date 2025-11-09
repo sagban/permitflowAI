@@ -96,30 +96,16 @@ export const Dashboard = () => {
       id: 'actions',
       label: 'Actions',
       render: (_, row) => (
-        <Box display="flex" gap={1}>
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/workorders/${row.workOrderId}`);
-            }}
-          >
-            View Details
-          </Button>
-          {row.status === 'New' && (
-            <Button
-              size="small"
-              variant="contained"
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/workorders/${row.workOrderId}`);
-              }}
-            >
-              Generate Permits
-            </Button>
-          )}
-        </Box>
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/workorders/${row.workOrderId}`);
+          }}
+        >
+          View Details
+        </Button>
       ),
     },
   ];

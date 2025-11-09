@@ -19,9 +19,9 @@ def create_permit_agent() -> LlmAgent:
         model='gemini-2.5-flash',
         name='permit_generator_agent',
         description="Generates required permits based on identified hazards and work order details.",
-        instruction=f"""You are a permit generator agent. Your task is to:
-1. Review the identified hazards from the hazard identification agent: {{hazard_identification_output}}
-2. Retrieve work order details using workorders.getById for 
+        instruction="""You are a permit generator agent. Your task is to:
+1. Review the identified hazards from the hazard identification agent
+2. Retrieve work order details using workorders.getById
 3. For each hazard or combination of hazards, determine the required permit type(s):
    - Hot Work: For welding, cutting, grinding, or activities producing sparks/heat
    - Confined Space Entry: For entry into confined spaces

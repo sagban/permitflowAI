@@ -28,7 +28,7 @@ export interface Permit {
   type: 'Hot Work' | 'Confined Space Entry' | 'Excavation' | 'Electrical/LOTO' | 'Working at Height';
   status: 'Draft' | 'Pending' | 'Approved';
   controls: string[];
-  PPE: string[];
+  ppe: string[];
   signOffRoles: string[];
   validityHours: number;
   attachmentsRequired: string[];
@@ -60,6 +60,46 @@ export interface AgentResponse {
     ragSnapshot: string;
   };
 }
+
+export interface SessionData {
+  preferred_language?: string;
+  visit_count?: number;
+  [key: string]: any;
+}
+
+export interface RunAgentRequest {
+  app_name: string;
+  user_id: string;
+  session_id: string;
+  new_message: {
+    role: 'user';
+    parts: Array<{
+      text: string;
+    }>;
+  };
+  streaming: boolean;
+}
+
+export interface AgentExecutionEvent {
+  type: string;
+  data?: any;
+  content?: {
+    parts: Array<{
+      text?: string;
+      functionCall?: any;
+      functionResponse?: any;
+    }>;
+    role?: string;
+  };
+  invocationId?: string;
+  author?: string;
+  actions?: any;
+  id?: string;
+  timestamp?: number;
+  [key: string]: any;
+}
+
+export type StreamCallback = (event: AgentExecutionEvent) => void;
 
 export interface PermitData {
   permit: Permit;
