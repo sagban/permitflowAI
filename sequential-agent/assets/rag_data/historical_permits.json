@@ -1,0 +1,149 @@
+{
+  "historicalPermits": [
+    {
+      "id": "PERM-HW-2024-045",
+      "site": "Plant-A",
+      "area": "Tank Farm",
+      "permitType": "Hot Work",
+      "date": "2024-08-15",
+      "status": "Approved",
+      "workOrderId": "WO-87230",
+      "title": "Hot Work Permit - Tank T-101",
+      "summary": "Hot work permit for welding on Tank T-101. Controls: Fire watch, extinguisher, gas test. PPE: Fire-resistant clothing, welding helmet. Approved with HSE sign-off.",
+      "description": "Hot work permit for welding repair on Tank T-101. All safety controls were properly implemented including dedicated fire watch personnel, fire extinguisher positioned within 10 meters, gas test performed showing safe conditions (LEL 0%, O2 20.9%). All required PPE was verified. Permit was approved by both Supervisor and HSE representatives.",
+      "hazards": ["fire", "sparks", "combustible materials"],
+      "controls": [
+        "Fire watch personnel assigned",
+        "Fire extinguisher (ABC type, 20lb) on site",
+        "Gas test performed (LEL 0%, O2 20.9%)",
+        "Area cleared of combustible materials within 15m radius",
+        "Wind speed monitored (below 15 mph)"
+      ],
+      "ppe": [
+        "Fire-resistant clothing",
+        "Safety glasses",
+        "Welding helmet",
+        "Leather gloves"
+      ],
+      "signOffRoles": ["Supervisor", "HSE"],
+      "validityHours": 8,
+      "outcome": "Successful completion with no incidents"
+    },
+    {
+      "id": "PERM-CSE-2024-032",
+      "site": "Plant-A",
+      "area": "Process Area",
+      "permitType": "Confined Space Entry",
+      "date": "2024-09-20",
+      "status": "Approved",
+      "workOrderId": "WO-88450",
+      "title": "Confined Space Entry - Vessel V-205",
+      "summary": "Confined space entry permit for V-205 inspection. Gas test: O2 20.9%, LEL 0%, H2S 0ppm, CO 0ppm. Controls: Continuous monitoring, ventilation, rescue plan, attendant.",
+      "description": "Confined space entry permit for internal inspection of vessel V-205. Initial gas test showed safe conditions: O2 20.9%, LEL 0%, H2S 0ppm, CO 0ppm. Forced ventilation system was set up with two blowers. Continuous gas monitoring was maintained throughout the entry. Attendant remained at entry point. Rescue team was on standby with tripod and winch system. Entry was completed successfully with no issues.",
+      "hazards": ["low oxygen", "toxic gases", "entrapment"],
+      "controls": [
+        "Gas test performed (O2, LEL, H2S, CO)",
+        "Continuous gas monitoring",
+        "Forced ventilation system (2 blowers)",
+        "Rescue plan documented and team on standby",
+        "Attendant at entry point",
+        "Communication protocol established"
+      ],
+      "ppe": [
+        "Gas monitor",
+        "Harness with retrieval line",
+        "Respiratory protection (available if needed)"
+      ],
+      "signOffRoles": ["Entry Supervisor", "HSE"],
+      "validityHours": 12,
+      "outcome": "Successful inspection completed safely"
+    },
+    {
+      "id": "PERM-EXC-2024-018",
+      "site": "Plant-A",
+      "area": "General",
+      "permitType": "Excavation",
+      "date": "2024-10-05",
+      "status": "Approved",
+      "workOrderId": "WO-89175",
+      "title": "Excavation Permit - Pipeline Installation",
+      "summary": "Excavation permit for 200m pipeline installation. Utility clearance completed. Shoring installed for depth > 1.5m. Barricades and signage in place.",
+      "description": "Excavation permit for installing 200 meters of 8-inch natural gas pipeline. Utility clearance was completed with all utilities marked. Ground penetrating radar was used to verify utility locations. Shoring was installed for sections exceeding 1.5 meters depth. Barricades and warning signs were positioned around the excavation perimeter. Traffic control was implemented as the route crossed an access road.",
+      "hazards": ["utility strike", "cave-in", "traffic"],
+      "controls": [
+        "Utility clearance completed and marked",
+        "Shoring installed for depth > 1.5m",
+        "Barricades and warning signs",
+        "Traffic control measures",
+        "Underground gas detection before excavation"
+      ],
+      "ppe": [
+        "Hard hat",
+        "Safety boots",
+        "High-visibility vest"
+      ],
+      "signOffRoles": ["HSE"],
+      "validityHours": 48,
+      "outcome": "Pipeline installed successfully with no utility strikes"
+    },
+    {
+      "id": "PERM-ELEC-2024-012",
+      "site": "Plant-A",
+      "area": "Pump House",
+      "permitType": "Electrical/LOTO",
+      "date": "2024-09-12",
+      "status": "Approved",
+      "workOrderId": "WO-89542",
+      "title": "Electrical/LOTO Permit - Pump P-207",
+      "summary": "Electrical/LOTO permit for pump P-207 maintenance. LOTO certificates issued. Isolation verified. Grounding confirmed. Supervisor and HSE sign-offs obtained.",
+      "description": "Electrical/LOTO permit for major overhaul of centrifugal pump P-207. All energy sources were isolated including electrical supply (480V main breaker CB-207), mechanical coupling, and hydraulic system. LOTO certificates were issued and locks applied. Zero energy state was verified through electrical multimeter test, pressure gauge reading, and mechanical rotation test. Grounding was confirmed. All systems were properly isolated before work began.",
+      "hazards": ["electrical", "mechanical", "hydraulic pressure"],
+      "controls": [
+        "LOTO certificates issued",
+        "Isolation verified (electrical, mechanical, hydraulic)",
+        "Grounding/bonding confirmed",
+        "Voltage test performed (zero energy verified)",
+        "Insulated tools used"
+      ],
+      "ppe": [
+        "Insulated gloves",
+        "Arc flash protection",
+        "Safety glasses",
+        "Voltage-rated tools"
+      ],
+      "signOffRoles": ["Supervisor", "HSE"],
+      "validityHours": 12,
+      "outcome": "Pump overhaul completed safely with proper LOTO procedures"
+    },
+    {
+      "id": "PERM-WAH-2024-008",
+      "site": "Plant-A",
+      "area": "Process Area",
+      "permitType": "Working at Height",
+      "date": "2024-11-01",
+      "status": "Approved",
+      "workOrderId": "WO-90123",
+      "title": "Working at Height Permit - Vessel V-203",
+      "summary": "Working at height permit for grinding operations on vessel V-203. Harness and anchor point verified. Ladder inspection completed. Area below barricaded.",
+      "description": "Working at height permit for grinding operations on pressure vessel V-203. Full body harness with shock-absorbing lanyard was used with verified anchor points. Ladder inspection was completed and documented. The area below the work location was properly barricaded. Tool tethering was implemented to prevent dropped objects.",
+      "hazards": ["fall", "dropped objects"],
+      "controls": [
+        "Harness and anchor point verified",
+        "Ladder inspection completed",
+        "Fall protection system in place",
+        "Tool tethering implemented",
+        "Area below barricaded"
+      ],
+      "ppe": [
+        "Full body harness",
+        "Hard hat",
+        "Safety boots",
+        "Lanyard with shock absorber"
+      ],
+      "signOffRoles": ["Supervisor"],
+      "validityHours": 8,
+      "outcome": "Grinding operations completed safely at height"
+    }
+  ]
+}
+

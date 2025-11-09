@@ -1,0 +1,35 @@
+permitType: Hot Work
+description: Permit for welding, cutting, grinding, or other activities that produce sparks or heat
+sections:
+  - title: Work Details
+    fields:
+      - location: string
+      - equipment: string
+      - workDescription: string
+      - scheduledTime: datetime
+  - title: Controls
+    fields:
+      - fireWatch: boolean
+      - fireExtinguisher: boolean
+      - gasTest: boolean
+      - areaCleared: boolean
+  - title: PPE
+    fields:
+      - fireResistantClothing: boolean
+      - safetyGlasses: boolean
+      - weldingHelmet: boolean
+      - leatherGloves: boolean
+  - title: Sign-offs
+    roles:
+      - Supervisor
+      - HSE
+defaultControls:
+  - Fire watch personnel
+  - Fire extinguisher on site
+  - Clear area of combustible materials
+defaultPPE:
+  - Fire-resistant clothing
+  - Safety glasses
+  - Welding helmet
+  - Leather gloves
+

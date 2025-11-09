@@ -1,0 +1,45 @@
+permitType: Confined Space Entry
+description: Permit for entry into confined spaces requiring special safety measures
+sections:
+  - title: Entry Details
+    fields:
+      - spaceLocation: string
+      - spaceDescription: string
+      - entryReason: string
+      - entryTime: datetime
+      - estimatedDuration: integer
+  - title: Gas Testing
+    fields:
+      - oxygenLevel: float
+      - lelLevel: float
+      - h2sLevel: float
+      - coLevel: float
+      - testTime: datetime
+      - testerName: string
+  - title: Controls
+    fields:
+      - continuousMonitoring: boolean
+      - ventilationSystem: boolean
+      - rescuePlan: boolean
+      - attendantPresent: boolean
+      - communicationProtocol: boolean
+  - title: PPE
+    fields:
+      - gasMonitor: boolean
+      - harnessWithRetrieval: boolean
+      - respiratoryProtection: boolean
+  - title: Sign-offs
+    roles:
+      - Entry Supervisor
+      - HSE
+defaultControls:
+  - Gas test (O2, LEL, H2S, CO)
+  - Continuous gas monitoring
+  - Ventilation system
+  - Rescue plan documented
+  - Attendant at entry point
+defaultPPE:
+  - Gas monitor
+  - Harness with retrieval line
+  - Respiratory protection if needed
+

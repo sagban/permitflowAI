@@ -1,0 +1,61 @@
+{
+  "incidents": [
+    {
+      "id": "INC-2024-001",
+      "site": "Plant-A",
+      "area": "Tank Farm",
+      "title": "Welding fire incident at Tank Farm",
+      "date": "2024-03-15",
+      "severity": "High",
+      "summary": "Fire occurred during welding work on Tank T-101. Root cause: insufficient fire watch and combustible materials nearby. Gas test was not performed before hot work.",
+      "description": "During scheduled maintenance on Tank T-101, a welding operation was initiated without proper safety protocols. The fire watch personnel were not adequately positioned, and combustible materials were present within 15 meters of the work area. A gas test was not performed prior to starting hot work. The fire was quickly extinguished but caused minor damage to insulation materials. No injuries reported.",
+      "hazards": ["fire", "sparks", "combustible materials", "hot work"],
+      "rootCause": "Insufficient fire watch, combustible materials in proximity, missing gas test",
+      "lessonsLearned": "Always perform gas test before hot work. Ensure fire watch is properly positioned. Clear all combustible materials within 15m radius.",
+      "tags": ["welding", "fire", "tank", "hot work", "gas test"]
+    },
+    {
+      "id": "INC-2024-002",
+      "site": "Plant-A",
+      "area": "Process Area",
+      "title": "Confined space gas exposure",
+      "date": "2024-05-20",
+      "severity": "Medium",
+      "summary": "Worker exposed to low oxygen in vessel V-205. Gas monitor alarm triggered. Entry was made without proper gas test. Ventilation was inadequate.",
+      "description": "A maintenance worker entered vessel V-205 for inspection without completing the full gas test protocol. The initial gas test showed acceptable levels, but continuous monitoring was not maintained. During the inspection, oxygen levels dropped below 19.5% and the gas monitor alarm activated. The worker was evacuated immediately. Investigation revealed that the forced ventilation system was not operating at full capacity.",
+      "hazards": ["low oxygen", "toxic gases", "confined space", "inadequate ventilation"],
+      "rootCause": "Incomplete gas test protocol, inadequate ventilation, lack of continuous monitoring",
+      "lessonsLearned": "Always perform complete gas test (O2, LEL, H2S, CO) before entry. Ensure continuous monitoring throughout entry. Verify ventilation system is operating properly.",
+      "tags": ["confined space", "gas", "oxygen", "ventilation", "vessel"]
+    },
+    {
+      "id": "INC-2024-003",
+      "site": "Plant-A",
+      "area": "General",
+      "title": "Excavation utility strike",
+      "date": "2024-07-10",
+      "severity": "High",
+      "summary": "Excavator struck underground electrical line. Utility clearance was not performed. No call-before-dig was made.",
+      "description": "During excavation work for pipeline installation, an excavator operator struck a buried 110kV electrical line. The utility clearance process was not completed, and no call-before-dig service was contacted. The strike caused a power outage and significant damage to the electrical infrastructure. No injuries occurred due to proper grounding of equipment.",
+      "hazards": ["electrical", "utility strike", "excavation", "high voltage"],
+      "rootCause": "Missing utility clearance, no call-before-dig, inadequate site marking",
+      "lessonsLearned": "Always perform utility clearance before excavation. Contact call-before-dig service. Mark all utilities clearly. Use hand excavation near marked utilities.",
+      "tags": ["excavation", "utility", "electrical", "clearance", "high voltage"]
+    },
+    {
+      "id": "INC-2024-004",
+      "site": "Plant-A",
+      "area": "Tank Farm",
+      "title": "Hot work near active tank operations",
+      "date": "2024-08-22",
+      "severity": "Medium",
+      "summary": "Hot work permit issued for welding near Tank T-204 while tank filling operations were ongoing. Violation of safety protocol requiring 50m separation.",
+      "description": "A hot work permit was incorrectly issued for welding operations within 30 meters of Tank T-204, which was actively being filled. The safety protocol requires a minimum 50-meter separation between hot work and active tank operations. The work was stopped immediately when the violation was identified. No incident occurred, but the potential for a serious fire or explosion was present.",
+      "hazards": ["fire", "explosion", "hot work", "tank operations"],
+      "rootCause": "Inadequate permit review, lack of coordination between operations and maintenance",
+      "lessonsLearned": "Enforce minimum 50m separation between hot work and active tank operations. Improve permit review process. Enhance coordination between departments.",
+      "tags": ["hot work", "tank", "welding", "safety protocol", "separation"]
+    }
+  ]
+}
+

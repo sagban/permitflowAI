@@ -1,0 +1,43 @@
+permitType: Electrical/LOTO
+description: Permit for electrical work requiring lockout/tagout procedures
+sections:
+  - title: Work Details
+    fields:
+      - equipment: string
+      - voltage: float
+      - workDescription: string
+      - location: string
+  - title: LOTO
+    fields:
+      - lotoCertificates: array
+      - isolationVerified: boolean
+      - groundingBonding: boolean
+      - voltageTest: boolean
+      - lotoAppliedBy: string
+  - title: Controls
+    fields:
+      - insulatedTools: boolean
+      - arcFlashProtection: boolean
+      - clearanceMaintained: boolean
+  - title: PPE
+    fields:
+      - insulatedGloves: boolean
+      - arcFlashSuit: boolean
+      - safetyGlasses: boolean
+      - voltageRatedTools: boolean
+  - title: Sign-offs
+    roles:
+      - Supervisor
+      - HSE
+defaultControls:
+  - LOTO certificates
+  - Isolation verified
+  - Grounding/bonding
+  - Voltage test before work
+  - Insulated tools
+defaultPPE:
+  - Insulated gloves
+  - Arc flash protection
+  - Safety glasses
+  - Voltage-rated tools
+

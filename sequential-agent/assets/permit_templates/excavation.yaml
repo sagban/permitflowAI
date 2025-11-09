@@ -1,0 +1,35 @@
+permitType: Excavation
+description: Permit for excavation work requiring safety controls
+sections:
+  - title: Excavation Details
+    fields:
+      - location: string
+      - depth: float
+      - length: float
+      - width: float
+      - soilType: string
+  - title: Controls
+    fields:
+      - utilityClearance: boolean
+      - shoringInstalled: boolean
+      - barricadesInstalled: boolean
+      - soilStabilityCheck: boolean
+      - accessRoutes: boolean
+  - title: PPE
+    fields:
+      - hardHat: boolean
+      - safetyBoots: boolean
+      - highVisVest: boolean
+  - title: Sign-offs
+    roles:
+      - HSE
+defaultControls:
+  - Utility clearance (call before dig)
+  - Shoring/barricades if depth > 1.2m
+  - Soil stability check
+  - Access/egress routes
+defaultPPE:
+  - Hard hat
+  - Safety boots
+  - High-visibility vest
+

@@ -1,0 +1,117 @@
+{
+  "workOrders": [
+    {
+      "workOrderId": "WO-87231",
+      "description": "Emergency repair of 12-inch crude oil transfer pipeline (Line ID: CR-TF-004A) located in Tank Farm Zone 2. Pipeline section between valves V-2047 and V-2048 has developed a circumferential crack approximately 150mm in length at the 6 o'clock position, resulting in active hydrocarbon leak. Leak rate estimated at 2-3 L/min. Immediate action required to prevent environmental contamination and ensure operational safety. Work scope includes: (1) Isolate pipeline section by closing upstream and downstream valves, (2) Depressurize and drain residual crude oil from isolated section, (3) Remove insulation and prepare weld area per API 1104 standards, (4) Perform full encirclement sleeve repair welding using qualified procedure WPS-2024-015, (5) Post-weld NDT inspection (ultrasonic and magnetic particle testing), (6) Pressure test to 150% design pressure (1.8 MPa), (7) Reinstall insulation and verify no leaks. Work to be performed in Class I Division 2 hazardous area. Ambient temperature expected 35-40°C. Wind conditions must be monitored. All welding operations must be conducted during daylight hours only. Ground water table at 2.5m depth - ensure proper containment and monitoring. Adjacent operations: Tank T-204 filling operations ongoing (50m distance), maintain safe separation. Estimated duration: 16 hours. Required materials: API 5L Grade X52 pipe material, full encirclement repair sleeve, welding consumables per WPS-2024-015, insulation materials, leak detection equipment. Safety critical: Hydrocarbon vapors present, implement continuous gas monitoring. No hot work within 15m radius during tank filling operations.",
+      "equipment": "Pipeline Section 4A",
+      "location": "Tank Farm - Zone 2",
+      "latitude": 28.6139,
+      "longitude": 77.2090,
+      "status": "New",
+      "assignedTo": "John Doe",
+      "crew": ["John Doe", "Jane Smith", "Mike Johnson"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-15T08:00:00Z",
+      "updatedAt": "2024-01-15T08:00:00Z"
+    },
+    {
+      "workOrderId": "WO-88452",
+      "description": "Internal inspection and repair of storage tank T-305 (50,000 barrel capacity). Tank has been decommissioned and drained. Residual sludge and vapors remain. Work scope: (1) Enter tank through manway access point (24-inch diameter opening at top), (2) Conduct visual inspection of internal surfaces for corrosion, cracks, and structural integrity, (3) Measure wall thickness using ultrasonic testing at 20 designated locations, (4) Remove accumulated sludge from bottom using vacuum truck, (5) Repair identified corrosion spots using epoxy coating system, (6) Replace damaged ladder rungs and safety platforms, (7) Install new level indicator calibration. Tank dimensions: 15m diameter, 12m height. Internal environment: Oxygen levels must be verified before entry, potential for H2S and hydrocarbon vapors. Ventilation required throughout entry. Confined space entry protocol mandatory. Rescue team must be on standby. Estimated duration: 24 hours. Required materials: Epoxy coating materials, replacement ladder components, ultrasonic testing equipment, vacuum truck, gas detection monitors, forced ventilation blowers, rescue equipment including tripod and winch system.",
+      "equipment": "Storage Tank T-305",
+      "location": "Crude Storage Area - Block 3",
+      "latitude": 28.6140,
+      "longitude": 77.2091,
+      "status": "New",
+      "assignedTo": "Sarah Connor",
+      "crew": ["Sarah Connor", "Robert Williams", "Emily Davis"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-16T07:30:00Z",
+      "updatedAt": "2024-01-16T07:30:00Z"
+    },
+    {
+      "workOrderId": "WO-89176",
+      "description": "Underground pipeline replacement project. Excavate and replace 200 meters of 8-inch diameter natural gas pipeline (Line ID: NG-PL-089) that has exceeded service life. Pipeline runs between compressor station C-12 and distribution point DP-7. Work scope: (1) Mark underground utilities using ground penetrating radar and utility locator services, (2) Excavate trench 2.5 meters deep and 1.2 meters wide along pipeline route, (3) Isolate and disconnect existing pipeline at both ends, (4) Remove old pipeline section, (5) Install new API 5L X42 pipeline with proper bedding and backfill, (6) Perform hydrostatic pressure test to 1.5 times operating pressure, (7) Backfill trench with approved material and restore surface. Critical considerations: Multiple utility lines in vicinity including electrical cables (110kV), water main (12-inch), and fiber optic communication lines. Underground gas detection required before excavation. Depth exceeds 1.5 meters - shoring or sloping required per OSHA standards. Barricading and signage mandatory around excavation perimeter. Traffic control needed as route crosses access road. Estimated duration: 48 hours. Required materials: New 8-inch API 5L X42 pipe, pipe fittings, welding consumables, shoring materials, barricades, utility markers, gas detection equipment.",
+      "equipment": "Natural Gas Pipeline NG-PL-089",
+      "location": "Between Compressor Station C-12 and Distribution Point DP-7",
+      "latitude": 28.6145,
+      "longitude": 77.2095,
+      "status": "New",
+      "assignedTo": "Michael Chen",
+      "crew": ["Michael Chen", "David Rodriguez", "Lisa Anderson", "James Wilson"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-17T09:00:00Z",
+      "updatedAt": "2024-01-17T09:00:00Z"
+    },
+    {
+      "workOrderId": "WO-89543",
+      "description": "Major overhaul and maintenance of centrifugal pump P-207 (450 HP, 3-phase electrical motor). Pump is critical for crude oil transfer operations. Work scope: (1) Isolate pump from process by closing inlet and outlet valves V-3056 and V-3057, (2) Lockout/tagout all energy sources including electrical supply (480V, 3-phase), mechanical drive coupling, and hydraulic pressure system, (3) Verify zero energy state through pressure testing and electrical verification, (4) Disconnect electrical connections and mechanical couplings, (5) Remove pump casing and impeller assembly, (6) Inspect and replace worn bearings, seals, and impeller vanes, (7) Rebuild pump assembly with new components, (8) Realign pump and motor to specification (0.05mm tolerance), (9) Reconnect all systems and perform functional testing. Energy sources to isolate: Electrical (480V main breaker CB-207), mechanical coupling (disconnect and lock), hydraulic system (close isolation valves and lock). Verification required: Electrical multimeter test, pressure gauge reading zero, mechanical rotation test. Supervisor sign-off required before work begins. Estimated duration: 12 hours. Required materials: Replacement bearings (SKF 6318), mechanical seals, impeller (new or rebuilt), alignment tools, lockout/tagout devices, pressure gauges, electrical test equipment.",
+      "equipment": "Centrifugal Pump P-207",
+      "location": "Pump House - Building 4",
+      "latitude": 28.6142,
+      "longitude": 77.2093,
+      "status": "New",
+      "assignedTo": "Thomas Brown",
+      "crew": ["Thomas Brown", "Jennifer Martinez"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-18T06:00:00Z",
+      "updatedAt": "2024-01-18T06:00:00Z"
+    },
+    {
+      "workOrderId": "WO-90124",
+      "description": "Cutting and removal of damaged process pipe section using oxy-acetylene cutting torch. 6-inch diameter process line (Line ID: PR-PL-442) carrying light hydrocarbons has been damaged by external corrosion. Line is located in process area with multiple adjacent process units. Work scope: (1) Isolate line section by closing block valves BV-889 and BV-890, (2) Purge line with nitrogen to remove residual hydrocarbons, (3) Verify gas-free condition using LEL meter and oxygen analyzer, (4) Cut damaged section using oxy-acetylene torch at designated locations, (5) Remove cut section, (6) Prepare new pipe section for installation. Work area: Class I Division 1 hazardous location. Continuous gas monitoring required throughout cutting operation. Fire watch personnel must be stationed at work location with fire extinguisher (ABC type, 20lb minimum). Fire extinguisher must be positioned within 10 meters of cutting location. Wind speed must not exceed 15 mph during cutting operations. No flammable materials within 15 meter radius. All personnel must wear fire-resistant coveralls and appropriate PPE. Adjacent units: Distillation column D-101 (30m distance), heat exchanger E-205 (25m distance). Estimated duration: 6 hours. Required materials: Oxy-acetylene cutting torch and cylinders, nitrogen purge gas, gas detection equipment, fire extinguisher, fire-resistant barriers, replacement pipe section.",
+      "equipment": "Process Pipe PR-PL-442",
+      "location": "Process Area - Unit 4",
+      "latitude": 28.6143,
+      "longitude": 77.2094,
+      "status": "New",
+      "assignedTo": "Patricia Lee",
+      "crew": ["Patricia Lee", "Christopher Taylor", "Amanda White"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-19T10:00:00Z",
+      "updatedAt": "2024-01-19T10:00:00Z"
+    },
+    {
+      "workOrderId": "WO-90876",
+      "description": "Welding repair work inside pressure vessel V-112 (reactor vessel, 8m height, 3m diameter). Vessel has been decommissioned, drained, and purged with nitrogen. Internal inspection revealed weld defects requiring repair. Work scope: (1) Enter vessel through top manway (18-inch diameter), (2) Set up forced ventilation system with two blowers to maintain safe atmosphere, (3) Conduct initial gas test to verify safe entry conditions (oxygen 19.5-23.5%, LEL 0%, H2S 0 ppm, CO 0 ppm), (4) Perform welding repairs on identified defect areas using TIG welding process, (5) Post-weld inspection and testing. Vessel entry requirements: Confined space entry permit mandatory. Attendant must remain outside vessel at all times. Rescue team on standby with tripod, winch, and full body harness retrieval system. Continuous gas monitoring inside vessel. Ventilation must run continuously during entry. Welding operations: Hot work permit required. Gas test must be conducted before welding and repeated every 2 hours during work. Fire watch assigned for all welding operations. Estimated duration: 18 hours. Required materials: TIG welding equipment, welding consumables (ER70S-6 filler wire), forced ventilation blowers, gas detection monitors, rescue equipment (tripod, winch, harness), fire extinguisher, fire watch personnel.",
+      "equipment": "Pressure Vessel V-112",
+      "location": "Reactor Area - Unit 2",
+      "latitude": 28.6141,
+      "longitude": 77.2092,
+      "status": "New",
+      "assignedTo": "Daniel Kim",
+      "crew": ["Daniel Kim", "Maria Garcia", "Kevin Johnson", "Rachel Thompson"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-20T08:00:00Z",
+      "updatedAt": "2024-01-20T08:00:00Z"
+    },
+    {
+      "workOrderId": "WO-91234",
+      "description": "Grinding operations to remove surface defects and prepare weld areas on pressure vessel V-203. Work involves using angle grinders with abrasive wheels to remove weld spatter, smooth weld beads, and prepare surfaces for coating application. Work scope: (1) Isolate vessel from process, (2) Verify gas-free condition, (3) Set up grinding equipment, (4) Perform grinding operations on external surfaces and internal accessible areas, (5) Clean and inspect prepared surfaces. Work location: Process area with hydrocarbon vapors possible. Grinding generates sparks and heat - hot work permit required. Gas test required before and during work. Fire watch must be assigned. Fire extinguisher (ABC type) must be positioned at work location. PPE required: Safety glasses, face shield, hearing protection, leather gloves, fire-resistant clothing. Estimated duration: 8 hours. Required materials: Angle grinders, abrasive grinding wheels, gas detection equipment, fire extinguisher, personal protective equipment.",
+      "equipment": "Pressure Vessel V-203",
+      "location": "Process Area - Unit 3",
+      "latitude": 28.6144,
+      "longitude": 77.2096,
+      "status": "New",
+      "assignedTo": "Steven Adams",
+      "crew": ["Steven Adams", "Michelle Foster"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-21T07:00:00Z",
+      "updatedAt": "2024-01-21T07:00:00Z"
+    },
+    {
+      "workOrderId": "WO-91890",
+      "description": "Excavation work for installation of new underground electrical cable conduit. Dig trench 1.8 meters deep and 0.6 meters wide for 150 meters along route from Substation S-5 to Control Building CB-3. Work scope: (1) Locate and mark all underground utilities using ground penetrating radar and utility locator, (2) Hand dig to expose utility crossings (electrical, water, gas lines), (3) Mechanically excavate trench using mini excavator, (4) Install PVC conduit sections with proper bedding, (5) Backfill trench with approved material, (6) Restore surface. Critical utilities in area: High voltage electrical lines (buried 0.8m depth), natural gas line (1.2m depth), water main (1.0m depth), fiber optic cable (0.5m depth). Utility isolation required where excavation crosses utilities. Depth exceeds 1.5 meters - shoring or benching required per OSHA 1926.652. Barricading and warning signs required. Traffic control needed as work area crosses pedestrian walkway. Estimated duration: 20 hours. Required materials: PVC conduit (4-inch diameter), excavation equipment, shoring materials, utility markers, barricades, traffic control signs.",
+      "equipment": "Electrical Conduit Installation",
+      "location": "Route from Substation S-5 to Control Building CB-3",
+      "latitude": 28.6146,
+      "longitude": 77.2097,
+      "status": "New",
+      "assignedTo": "Brian Moore",
+      "crew": ["Brian Moore", "Nicole Harris", "Eric Young"],
+      "environmentType": "onshore",
+      "createdAt": "2024-01-22T09:30:00Z",
+      "updatedAt": "2024-01-22T09:30:00Z"
+    }
+  ]
+}
+

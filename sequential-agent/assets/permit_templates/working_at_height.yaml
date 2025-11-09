@@ -1,0 +1,37 @@
+permitType: Working at Height
+description: Permit for work at elevated locations requiring fall protection
+sections:
+  - title: Work Details
+    fields:
+      - location: string
+      - height: float
+      - workDescription: string
+      - accessMethod: string
+  - title: Controls
+    fields:
+      - harnessAndAnchor: boolean
+      - ladderScaffoldInspection: boolean
+      - fallProtectionSystem: boolean
+      - toolTethering: boolean
+      - areaBarricaded: boolean
+  - title: PPE
+    fields:
+      - fullBodyHarness: boolean
+      - hardHat: boolean
+      - safetyBoots: boolean
+      - lanyardWithShockAbsorber: boolean
+  - title: Sign-offs
+    roles:
+      - Supervisor
+defaultControls:
+  - Harness and anchor point
+  - Ladder/scaffold inspection
+  - Fall protection system
+  - Tool tethering
+  - Area below barricaded
+defaultPPE:
+  - Full body harness
+  - Hard hat
+  - Safety boots
+  - Lanyard with shock absorber
+

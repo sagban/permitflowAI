@@ -1,0 +1,106 @@
+{
+  "version": "v1.0",
+  "permitTypes": {
+    "Hot Work": {
+      "required_controls": [
+        "Fire watch personnel",
+        "Fire extinguisher on site",
+        "Gas test if near confined spaces",
+        "Clear area of combustible materials"
+      ],
+      "required_ppe": [
+        "Fire-resistant clothing",
+        "Safety glasses",
+        "Welding helmet",
+        "Leather gloves"
+      ],
+      "required_signoffs": ["Supervisor", "HSE"],
+      "validity_hours_max": 24,
+      "environment_rules": {
+        "Tank Farm": ["Gas test required", "Additional fire watch"],
+        "Confined Space Proximity": ["Gas test mandatory", "Continuous monitoring"]
+      }
+    },
+    "Confined Space Entry": {
+      "required_controls": [
+        "Gas test (O2, LEL, H2S, CO)",
+        "Continuous gas monitoring",
+        "Ventilation system",
+        "Rescue plan documented",
+        "Attendant at entry point"
+      ],
+      "required_ppe": [
+        "Gas monitor",
+        "Harness with retrieval line",
+        "Respiratory protection if needed"
+      ],
+      "required_signoffs": ["Entry Supervisor", "HSE"],
+      "validity_hours_max": 12,
+      "environment_rules": {
+        "default": ["Entry permit must be posted", "Communication protocol established"]
+      }
+    },
+    "Excavation": {
+      "required_controls": [
+        "Utility clearance (call before dig)",
+        "Shoring/barricades if depth > 1.2m",
+        "Soil stability check",
+        "Access/egress routes",
+        "Protective systems for depth > 1.5m"
+      ],
+      "required_ppe": [
+        "Hard hat",
+        "Safety boots",
+        "High-visibility vest"
+      ],
+      "required_signoffs": ["HSE"],
+      "validity_hours_max": 48,
+      "environment_rules": {
+        "Near Utilities": ["Utility marking required", "Hand excavation near marked lines"]
+      }
+    },
+    "Electrical/LOTO": {
+      "required_controls": [
+        "LOTO certificates",
+        "Isolation verified",
+        "Grounding/bonding",
+        "Voltage test before work",
+        "Insulated tools"
+      ],
+      "required_ppe": [
+        "Insulated gloves",
+        "Arc flash protection",
+        "Safety glasses",
+        "Voltage-rated tools"
+      ],
+      "required_signoffs": ["Supervisor", "HSE"],
+      "validity_hours_max": 72,
+      "environment_rules": {
+        "High Voltage (>600V)": ["Additional clearance", "Two-person rule"],
+        "Capacitor Banks": ["Discharge verification required"]
+      }
+    },
+    "Working at Height": {
+      "required_controls": [
+        "Harness and anchor point",
+        "Ladder/scaffold inspection",
+        "Fall protection system",
+        "Tool tethering",
+        "Area below barricaded"
+      ],
+      "required_ppe": [
+        "Full body harness",
+        "Hard hat",
+        "Safety boots",
+        "Lanyard with shock absorber"
+      ],
+      "required_signoffs": ["Supervisor"],
+      "validity_hours_max": 24,
+      "environment_rules": {
+        "Height > 6m": ["Rescue plan required", "Additional anchor points"],
+        "Over Water": ["Flotation device", "Rescue boat on standby"]
+      }
+    }
+  }
+}
+
