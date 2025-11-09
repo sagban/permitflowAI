@@ -1,0 +1,49 @@
+graph TB
+    subgraph "Frontend"
+        UI[React Web App<br/>TypeScript + MUI]
+    end
+    
+    subgraph "Cloud Run Services"
+        AGENT[Sequential Agent<br/>Google ADK]
+        ETL1[RAG ETL Job<br/>Incidents & Permits]
+        ETL2[RAG Embed Job<br/>Vector Upsert]
+    end
+    
+    subgraph "AI Services"
+        GEMINI[Gemini 2.5 Pro/Flash<br/>LLM]
+        RAG[Vertex AI RAG Engine<br/>Vector Store]
+        WEATHER[Google Maps<br/>Weather API]
+    end
+    
+    subgraph "Storage"
+        GCS[Cloud Storage<br/>PDFs & Assets]
+        LOCAL[localStorage<br/>Permits & Status]
+    end
+    
+    subgraph "Knowledge Base"
+        INCIDENTS[Historical Incidents<br/>Namespace: incidents]
+        PERMITS[Historical Permits<br/>Namespace: historical_permits]
+        POLICY[Policy Templates<br/>& Compliance Rules]
+    end
+    
+    UI -->|API Calls| AGENT
+    AGENT --> GEMINI
+    AGENT --> RAG
+    AGENT --> WEATHER
+    AGENT --> POLICY
+    AGENT --> GCS
+    UI --> LOCAL
+    
+    ETL1 --> INCIDENTS
+    ETL1 --> PERMITS
+    ETL1 -->|Normalized Data| ETL2
+    ETL2 -->|Embeddings| RAG
+    
+    RAG --> INCIDENTS
+    RAG --> PERMITS
+    
+    style UI fill:#1565C0,color:#fff
+    style AGENT fill:#2E7D32,color:#fff
+    style GEMINI fill:#FF9800,color:#fff
+    style RAG fill:#7B1FA2,color:#fff
+

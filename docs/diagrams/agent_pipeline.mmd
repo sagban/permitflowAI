@@ -1,0 +1,42 @@
+graph LR
+    START([Work Order ID]) --> A1
+    
+    A1[Gemini 2.5 Pro<br/>Hazard Agent]
+    A1 --> A1_TOOLS[Tools:<br/>workorders.get_workorder_by_id<br/>rag.search_rag<br/>weather.get_weather_data]
+    A1_TOOLS --> A1_OUT[Output: hazards[]<br/>with evidence & confidence]
+    
+    A1_OUT --> A2
+    
+    A2[Gemini 2.5 Flash<br/>Permit Agent]
+    A2 --> A2_TOOLS[Tools:<br/>policy.load<br/>ids.newPermitId]
+    A2_TOOLS --> A2_OUT[Output: permits[]<br/>with controls, PPE, sign-offs]
+    
+    A2_OUT --> LOOP_START{Refinement Loop<br/>Max 2 iterations}
+    LOOP_START --> A3
+    
+    A3[Gemini 2.5 Pro<br/>Validator Agent]
+    A3 --> A3_TOOLS[Tools:<br/>rules.evaluate<br/>rag.search_rag]
+    A3_TOOLS --> A3_OUT[Output: validation<br/>Pass/Warn/Fail + findings]
+    
+    A3_OUT --> CHECK{Validation<br/>Status?}
+    CHECK -->|Pass| END_LOOP[Exit Loop]
+    CHECK -->|Warn/Fail| A4
+    
+    A4[Gemini 2.5 Flash<br/>Refiner Agent]
+    A4 --> A4_TOOLS[Tools:<br/>workorders.get_workorder_by_id]
+    A4_TOOLS --> A4_OUT[Output: refined permits[]]
+    
+    A4_OUT --> ITER_CHECK{Iteration<br/>Count < 2?}
+    ITER_CHECK -->|Yes| A3
+    ITER_CHECK -->|No| END_LOOP
+    
+    END_LOOP --> FINAL[Final Permits<br/>+ Validations<br/>+ PDF Links]
+    FINAL --> END([Complete])
+    
+    style A1 fill:#1565C0,color:#fff
+    style A2 fill:#2E7D32,color:#fff
+    style A3 fill:#FF9800,color:#fff
+    style A4 fill:#7B1FA2,color:#fff
+    style START fill:#424242,color:#fff
+    style END fill:#424242,color:#fff
+
