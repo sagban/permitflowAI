@@ -1,0 +1,34 @@
+graph LR
+    START([Work Order ID]) --> A1
+    
+    A1[A1: Hazard ID<br/>Gemini 2.5 Pro<br/>workorders, rag, weather]
+    A1 -->|hazards| A2
+    
+    A2[A2: Permit Gen<br/>Gemini 2.5 Flash<br/>policy, ids]
+    A2 -->|permits| LOOP
+    
+    subgraph LOOP["Refinement Loop (Max 2 iterations)"]
+        A3[A3: Validator<br/>Gemini 2.5 Pro<br/>rules, rag]
+        A3 -->|validation| CHECK{Pass?}
+        CHECK -->|No| A4
+        A4[A4: Refiner<br/>Gemini 2.5 Flash<br/>exit_loop]
+        A4 -->|refined| ITER{Count < 2?}
+        ITER -->|Yes| A3
+    end
+    
+    CHECK -->|Yes| END_LOOP[Exit Loop]
+    ITER -->|No| END_LOOP
+    
+    END_LOOP --> FINAL[Final Output<br/>permits, runMeta]
+    FINAL --> END([Complete])
+    
+    style A1 fill:#1565C0,color:#fff
+    style A2 fill:#2E7D32,color:#fff
+    style A3 fill:#FF9800,color:#fff
+    style A4 fill:#7B1FA2,color:#fff
+    style START fill:#424242,color:#fff
+    style END fill:#424242,color:#fff
+    style LOOP fill:#E1BEE7,color:#000
+    style CHECK fill:#FFE082,color:#000
+    style ITER fill:#FFE082,color:#000
+
