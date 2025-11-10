@@ -13,11 +13,12 @@ PermitFlowAI is an end-to-end AI-powered permit generation system that automates
 
 ## 🏗️ Architecture
 
-PermitFlowAI consists of three main components:
+PermitFlowAI consists of four main components:
 
 1. **Frontend**: React + TypeScript web application with Material-UI
 2. **Sequential Agent System**: Google ADK multi-agent pipeline deployed on Cloud Run
 3. **RAG Knowledge Base**: Vertex AI RAG Engine with historical incidents and permits
+4. **Cloud Run Jobs** for ETL and vector updates, orchestrated via Cloud Scheduler and Pub/Sub
 
 ### Agent Pipeline
 
