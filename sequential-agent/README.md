@@ -77,11 +77,7 @@ And returns:
 Deploy using ADK's built-in deployment command:
 
 ```bash
-adk deploy cloud_run \
-  --project=YOUR_PROJECT_ID \
-  --region=us-central1 \
-  --service_name=sequential-agent \
-  --with_ui \
+adk deploy cloud_run --project=gen-lang-client-0805018961 --region=us-central1 --allow_origins=https://permitflow-frontend-624881849547.us-central1.run.app ./sequential-agent
   .
 ```
 
