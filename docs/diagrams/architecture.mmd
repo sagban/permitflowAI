@@ -4,7 +4,7 @@ graph TB
     end
     
     subgraph "Cloud Run Services"
-        AGENT[Sequential Agent<br/>Google ADK]
+        AGENT[Permit Flow Agent<br/>Google ADK]
         ETL1[RAG ETL Job<br/>Incidents & Permits]
         ETL2[RAG Embed Job<br/>Vector Upsert]
     end
@@ -15,9 +15,13 @@ graph TB
         WEATHER[Google Maps<br/>Weather API]
     end
     
-    subgraph "Storage"
+    subgraph "Enterprise Components"
+        DB[(Cloud SQL PostgreSQL<br/>Permit Database<br/>- permits<br/>- validations<br/>- audit_logs)]
         GCS[Cloud Storage<br/>PDFs & Assets]
-        LOCAL[localStorage<br/>Permits & Status]
+    end
+    
+    subgraph "External Systems"
+        SAP[SAP/Maximo<br/>Work Order System]
     end
     
     subgraph "Knowledge Base"
@@ -27,12 +31,14 @@ graph TB
     end
     
     UI -->|API Calls| AGENT
+    UI -->|Store/Retrieve| DB
     AGENT --> GEMINI
     AGENT --> RAG
     AGENT --> WEATHER
     AGENT --> POLICY
-    AGENT --> GCS
-    UI --> LOCAL
+    
+    SAP -->|Work Orders| UI
+    SAP -->|Work Orders| AGENT
     
     ETL1 --> INCIDENTS
     ETL1 --> PERMITS
@@ -42,8 +48,9 @@ graph TB
     RAG --> INCIDENTS
     RAG --> PERMITS
     
-    style UI fill:#1565C0,color:#fff
+    style UI fill:#1565C1,color:#fff
     style AGENT fill:#2E7D32,color:#fff
     style GEMINI fill:#FF9800,color:#fff
     style RAG fill:#7B1FA2,color:#fff
-
+    style DB fill:#0277BD,color:#fff
+    style SAP fill:#D32F2F,color:#fff
