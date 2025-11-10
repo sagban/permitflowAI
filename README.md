@@ -166,7 +166,7 @@ adk deploy cloud_run \
 
 **Access Application**: Open the Cloud Run service URL in your browser
    ```
-   https://permitflowai-frontend-XXXXX-uc.a.run.app
+   https://permitflow-frontend-624881849547.us-central1.run.app/
    ```
 
 ### Generate Permits

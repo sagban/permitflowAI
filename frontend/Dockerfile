@@ -13,9 +13,9 @@ RUN npm ci
 COPY . .
 
 # Build arguments for environment variables
-ARG VITE_API_BASE_URL
-ARG VITE_APP_NAME
-ARG VITE_AUTH_TOKEN
+ARG VITE_API_BASE_URL=https://adk-default-service-name-624881849547.us-central1.run.app
+ARG VITE_APP_NAME=sequential-agent
+ARG VITE_AUTH_TOKEN=
 
 # Set environment variables for build
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
