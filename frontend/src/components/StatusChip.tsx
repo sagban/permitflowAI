@@ -1,7 +1,7 @@
 import { Chip, ChipProps } from '@mui/material';
 import { useMemo } from 'react';
 
-interface StatusChipProps extends Omit<ChipProps, 'color' | 'label'> {
+interface StatusChipProps extends Omit<ChipProps, 'color' | 'label' | 'variant'> {
   status: string;
   variant?: 'wo' | 'permit' | 'validation';
 }

@@ -1,5 +1,4 @@
 import { Alert, Snackbar } from '@mui/material';
-import { useState, useEffect } from 'react';
 
 interface ErrorAlertProps {
   message: string;

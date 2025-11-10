@@ -7,7 +7,6 @@ import {
   TableRow,
   Paper,
   TableSortLabel,
-  Box,
   Typography,
 } from '@mui/material';
 import { useState, useMemo } from 'react';
