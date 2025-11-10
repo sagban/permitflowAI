@@ -1,8 +1,6 @@
-# PermitFlowAI - Hackathon Submission
+# PermitFlowAI
 
 ## Inspiration
-
-### The Critical Problem
 
 Industrial safety in oil & gas operations is a matter of life and death. Yet, the permit-to-work process—the critical safety gatekeeper—remains trapped in a manual, error-prone system that costs lives, time, and millions of dollars.
 
@@ -25,40 +23,18 @@ Industrial safety in oil & gas operations is a matter of life and death. Yet, th
 - **Knowledge gaps**: Critical lessons from past incidents are buried in reports, not accessible during permit creation
 - **Weather and environmental factors**: Often overlooked in manual processes, leading to 12% of weather-related incidents
 
-### The Industry Trend
-
-The oil & gas industry is at an inflection point:
-- **Labor shortages**: 439,000 skilled workers needed by 2025, including safety engineers
-- **Aging workforce**: 40% of experienced safety engineers approaching retirement
-- **Increasing regulations**: Compliance requirements growing 15% annually
-- **Digital transformation**: Industry moving toward AI-powered solutions for operational excellence
-
 ### Our Solution: PermitFlowAI
 
 We built PermitFlowAI to address these critical challenges by leveraging Google's Agent Development Kit (ADK) and Gemini AI to automate the entire permit-to-work workflow. Our system:
 
-**Eliminates Human Error:**
+**Key Features**
 - AI-powered hazard identification with **95%+ accuracy** using RAG from historical incidents
 - Automated compliance checking ensures **100% rule adherence**
 - Evidence-backed decisions with links to past incidents and permits
-
-**Reduces Time & Cost:**
 - **4-8 hours → 2-5 minutes**: 99% reduction in permit generation time
-- **3-4 cycles → 1 cycle**: Automated validation-refinement loop ensures first-pass compliance
-- **$50K-$200K → $500-$2K**: 95% reduction in permit processing costs
 - **Zero delays**: Instant permit generation means work starts immediately
-
-**Prevents Incidents:**
 - **RAG-powered learning**: System learns from every historical incident, preventing repeat mistakes
-- **Comprehensive hazard detection**: Identifies hazards humans miss, including environmental factors
-- **Real-time validation**: Catches compliance issues before permits are issued
-- **Evidence trail**: Every decision is traceable to historical data and regulations
 
-**Scales with Industry Needs:**
-- Handles **unlimited work orders** simultaneously
-- Learns continuously from new incidents and permits
-- Adapts to changing regulations automatically
-- Integrates with SAP/Maximo for enterprise deployment
 
 By combining structured agent orchestration with Retrieval-Augmented Generation from historical incidents and permits, PermitFlowAI transforms a multi-hour, error-prone manual process into an automated, intelligent system that generates compliant permits in minutes while learning from past safety data—ultimately saving lives, time, and millions of dollars.
 
@@ -82,15 +58,16 @@ The system includes a modern React web interface where users can view work order
 
 ### Architecture Overview
 
-**Note:** For the hackathon demo, we use localStorage and static JSON files for rapid prototyping. The enterprise architecture shows Cloud SQL database and SAP/Maximo integration for production deployment.
+PermitFlowAI consists of four main components:
 
-PermitFlowAI consists of three main components:
-
-1. **Frontend (React + TypeScript)**: Modern web application with Material-UI
-2. **Sequential Agent System (Google ADK)**: Multi-agent pipeline deployed on Cloud Run
+1. **Frontend (React + TypeScript)**: Modern web application with Material-UI, deployed on Cloud Run
+2. **Sequential Agent System (Google ADK)**: Multi-agent pipeline deployed on Cloud Run (HTTP service)
 3. **RAG Knowledge Base**: Vertex AI RAG Engine with historical incidents and permits
+4. **ETL Pipeline (Cloud Run Jobs)**: Two scheduled Cloud Run Jobs that refresh the RAG knowledge base:
+   - **Job 1 - `rag-etl-incidents-permits`**: Extracts and normalizes incidents and historical permits from data sources, runs every 12 hours via Cloud Scheduler
+   - **Job 2 - `rag-embed-upsert`**: Chunks, embeds (using Gemini text-embedding), and upserts vectors to Vertex AI RAG Engine, triggered by Pub/Sub after Job 1 completes
 
-![Enterprise Architecture](visualizations/architecture_enterprise.png)
+![Architecture](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/967/684/datas/original.png)
 *Enterprise-scale system architecture with Cloud SQL database and SAP/Maximo integration*
 
 **Note:** Current demo uses localStorage and JSON files. Enterprise architecture includes Cloud SQL PostgreSQL for persistent storage and SAP/Maximo integration for real-time work order sync.
@@ -124,11 +101,9 @@ We built a sophisticated 4-agent sequential pipeline using Google ADK:
 
 **Orchestration**: Uses ADK's `SequentialAgent` for A1→A2 and `LoopAgent` for the A3→A4 refinement loop. Agents communicate via state management using `output_key` for structured outputs.
 
-![Agent Pipeline](visualizations/agent_pipeline.png)
+![Agent Pipeline](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/967/743/datas/original.png)
 *Detailed agent pipeline flow showing sequential execution and refinement loop*
 
-![Agent Execution Timeline](visualizations/agent_execution_timeline.png)
-*Agent execution timeline showing time spent in each stage*
 
 ### Frontend Implementation
 
@@ -139,19 +114,6 @@ We built a sophisticated 4-agent sequential pipeline using Google ADK:
 - **API Integration**: Two-step process following Google ADK agent API pattern (session management + agent execution)
 - **Design**: Modern minimalist design with professional color palette optimized for industrial safety applications
 
-**Enterprise Enhancements:**
-- Real-time work order sync from SAP/Maximo via REST API
-- Persistent database storage with audit trails
-- Redis caching for performance optimization
-- Mobile app support (iOS/Android)
-- SSO integration with Active Directory
-
-![Dashboard Screenshot](screenshots/dashboard.png)
-*Modern dashboard interface showing work orders with status tracking*
-
-![Permit Viewer](screenshots/permit_viewer.png)
-*Permit viewer showing details, validation results, and RAG evidence*
-
 ### RAG Knowledge Base
 
 - **Data Sources**: Historical incidents and finalized permits (namespaced in Vertex AI RAG Engine)
@@ -160,8 +122,6 @@ We built a sophisticated 4-agent sequential pipeline using Google ADK:
   - **Enterprise**: Cloud Dataflow for large-scale ETL, Pub/Sub for event streaming, real-time updates
   - Job 1: Extract and normalize incidents + historical permits from SAP/Maximo and other sources
   - Job 2: Chunk, embed (Gemini text-embedding), and upsert to vector store
-- **Search**: Contextual retrieval with namespace filtering and site-specific filters
-- **Enterprise**: Multi-region RAG deployment for global availability and low latency
 
 ### Tools & Infrastructure
 
@@ -172,52 +132,27 @@ We built a sophisticated 4-agent sequential pipeline using Google ADK:
 - `policy.load`: Loads permit templates and policy rules (Demo: Local files | Enterprise: Cloud Config/Storage)
 - `rules.evaluate`: Evaluates permits against deterministic compliance rules
 - `ids.newPermitId`: Generates unique permit IDs (Enterprise: Database sequence)
-- `pdf.render`: Generates PDF documents for permits
 
-**Deployment - Demo**:
-- Agent system deployed to Cloud Run using ADK's built-in deployment
-- Frontend deployed to Cloud Run or static hosting
-- RAG refresh jobs run as Cloud Run Jobs triggered by Cloud Scheduler
-- Data stored in localStorage and static JSON files
-
-**Deployment - Enterprise**:
-- **Load Balancing**: Cloud Load Balancer with global distribution
-- **API Gateway**: Cloud Endpoints or Apigee for authentication, rate limiting, and API management
-- **Auto-scaling**: Cloud Run services with min/max instances based on load
-- **Database**: Cloud SQL PostgreSQL with read replicas for high availability
-- **Caching**: Cloud Memorystore (Redis) for session management and performance
-- **Storage**: Cloud Storage with lifecycle policies and versioning
-- **Monitoring**: Cloud Monitoring, Logging, Trace, and Error Reporting
-- **Security**: Cloud IAM, VPC networking, Cloud Armor (DDoS protection), Secret Manager
-- **Integration**: Real-time SAP/Maximo sync, Active Directory SSO, notification services
-- **Compliance**: Audit logging, data retention policies, encryption at rest and in transit
+**Deployment**:
+- **Agent Service**: Deployed to Cloud Run (HTTP service) using ADK's built-in deployment
+- **Frontend**: Deployed to Cloud Run as a containerized React application
+- **RAG ETL Jobs**: Two Cloud Run Jobs for knowledge base refresh:
+  - `rag-etl-incidents-permits`: Scheduled Cloud Run Job (every 12 hours via Cloud Scheduler)
+  - `rag-embed-upsert`: Event-driven Cloud Run Job (triggered by Pub/Sub)
+- **Data Storage**: localStorage and static JSON files for demo purposes
 
 ### Structured Output & State Management
 
 All agents use Pydantic output schemas enforced by ADK, ensuring structured, validated JSON outputs. Agents share state via `output_key` mechanism, allowing downstream agents to access previous outputs (e.g., `{hazard_identification_output}`, `{permit_generator_output}`).
 
-![Time Comparison](visualizations/time_comparison.png)
-*Before/After comparison: Manual process (4-8 hours) vs PermitFlowAI (2-5 minutes)*
 
 ## Challenges we ran into
 
 1. **Agent State Management**: Initially struggled with passing structured data between agents. We solved this by leveraging ADK's `output_key` mechanism and state injection, allowing agents to access previous outputs via template variables like `{hazard_identification_output}`.
 
-2. **Validation-Refinement Loop**: Implementing the iterative refinement loop required careful orchestration to ensure A3 and A4 could access both the current permit state and validation results. We used ADK's `LoopAgent` with proper state management to enable the feedback loop.
+2. **RAG Integration**: Setting up Vertex AI RAG Engine with proper namespacing and fallback mechanisms was challenging.
 
-3. **RAG Integration**: Setting up Vertex AI RAG Engine with proper namespacing and fallback mechanisms was challenging. We implemented graceful fallbacks to mock data when RAG isn't configured, ensuring the system works in demo mode.
-
-4. **Structured Output Consistency**: Ensuring all agents output consistent, validated JSON structures required careful schema design. We used Pydantic models with strict validation and enforced output schemas in ADK to guarantee structure.
-
-5. **Frontend-Backend Integration**: The Google ADK agent API pattern required a two-step process (session management + agent execution). We had to implement proper session ID generation and management in the frontend to match the expected API pattern.
-
-6. **PDF Generation**: Generating compliant PDFs with proper formatting and including validation results required careful template design and integration with Google Cloud Storage.
-
-![Validation Results](visualizations/validation_results.png)
-*Permit validation results showing high pass rate with automated refinement*
-
-![Permit Types](visualizations/permit_types_distribution.png)
-*Distribution of permit types generated by the system*
+3. **Structured Output Consistency**: Ensuring all agents output consistent, validated JSON structures required careful schema design. We used Pydantic models with strict validation and enforced output schemas in ADK to guarantee structure.
 
 ## Accomplishments that we're proud of
 
@@ -227,39 +162,13 @@ All agents use Pydantic output schemas enforced by ADK, ensuring structured, val
 
 3. **Self-Validating System**: Implemented an iterative validation-refinement loop that automatically improves permit quality until compliance is achieved, ensuring generated permits meet all regulatory requirements.
 
-4. **Production-Ready Architecture**: Designed a scalable, cloud-native architecture using Google Cloud Run, Vertex AI RAG Engine, and ADK that can handle real-world workloads with proper error handling and fallbacks.
-
-5. **Modern User Experience**: Created a clean, professional web interface that makes complex permit management intuitive, with real-time progress tracking, detailed validation feedback, and evidence links.
-
-6. **Comprehensive Permit Support**: Implemented support for 5 critical permit types (Hot Work, Confined Space Entry, Excavation, Electrical/LOTO, Working at Height) with type-specific compliance rules and templates.
-
-7. **Evidence-Based Decisions**: Every permit includes links to relevant RAG snippets from historical incidents and permits, providing transparency and traceability for safety-critical decisions.
-
-8. **Structured Agent Pipeline**: Successfully orchestrated 4 specialized agents using Google ADK's SequentialAgent and LoopAgent patterns, demonstrating advanced agentic AI capabilities.
-
-![RAG Effectiveness](visualizations/rag_effectiveness.png)
-*RAG query effectiveness showing high relevance of retrieved snippets*
-
-![Refinement Improvement](visualizations/refinement_iterations.png)
-*Permit quality improvement through iterative refinement loop*
-
 ## What we learned
 
 1. **Agent Orchestration**: Learned how to effectively orchestrate multiple specialized agents using Google ADK, including sequential execution and iterative loops with state management.
 
-2. **RAG for Safety-Critical Applications**: Discovered how RAG can be leveraged for safety-critical applications by providing evidence-backed recommendations from historical data, improving both accuracy and transparency.
+2. **State Management in Multi-Agent Systems**: Learned how to effectively share state between agents using output keys and state injection, enabling complex multi-step workflows.
 
-3. **Structured Output with LLMs**: Gained deep understanding of enforcing structured outputs using Pydantic schemas and ADK's output schema mechanism, ensuring reliable data flow between agents.
-
-4. **Iterative Refinement Patterns**: Learned how to implement self-improving systems using validation-refinement loops, where agents can iteratively improve their outputs based on feedback.
-
-5. **Cloud-Native AI Deployment**: Understood the complexities of deploying AI agents to production using Cloud Run, including session management, state handling, and API design.
-
-6. **Deterministic + LLM Hybrid Approach**: Discovered the importance of combining deterministic rule-based validation with LLM-powered generation, ensuring both flexibility and compliance.
-
-7. **State Management in Multi-Agent Systems**: Learned how to effectively share state between agents using output keys and state injection, enabling complex multi-step workflows.
-
-8. **Industrial Safety Domain**: Gained insights into oil & gas permit-to-work processes, compliance requirements, and the critical importance of safety documentation in industrial operations.
+3. **Industrial Safety Domain**: Gained insights into oil & gas permit-to-work processes, compliance requirements, and the critical importance of safety documentation in industrial operations.
 
 ## What's next for PermitFlow AI
 
@@ -269,21 +178,4 @@ All agents use Pydantic output schemas enforced by ADK, ensuring structured, val
 
 3. **Advanced RAG**: Enhance RAG knowledge base with more data sources (safety bulletins, regulatory updates, equipment manuals) and implement semantic search improvements.
 
-4. **Multi-Language Support**: Add support for multiple languages in permit generation and validation, making the system accessible to international operations.
-
-5. **Mobile Application**: Develop a mobile app for field workers to view permits, complete sign-offs, and upload evidence photos directly from job sites.
-
-6. **Analytics Dashboard**: Build analytics dashboard showing permit generation trends, common hazards, validation failure patterns, and safety insights.
-
-7. **Notification System**: Implement real-time notifications for permit approvals, expirations, and critical safety alerts.
-
-8. **Machine Learning Enhancements**: Train custom models on historical permit data to improve hazard prediction accuracy and identify patterns in safety incidents.
-
-9. **Integration Ecosystem**: Build integrations with other safety systems (incident reporting, training management, equipment maintenance) for a comprehensive safety platform.
-
-10. **Regulatory Compliance Updates**: Implement automated updates to compliance rules based on regulatory changes, ensuring permits always meet current requirements.
-
-11. **Collaborative Review**: Add features for multiple stakeholders to review and comment on permits before approval, with version control and audit trails.
-
-12. **AI Explainability**: Enhance evidence presentation with more detailed explanations of why specific hazards were identified and why certain controls were recommended.
-
+4. **Notification System**: Implement real-time notifications for permit approvals, expirations, and critical safety alerts.

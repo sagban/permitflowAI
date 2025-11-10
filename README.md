@@ -142,6 +142,52 @@ adk deploy cloud_run \
   .
 ```
 
+## 🧪 Testing Instructions
+
+### Quick Start
+
+#### Option 1: Local Development
+
+1. **Start Agent Service** (Terminal 1):
+   ```bash
+   cd sequential-agent
+   adk web --port 8000
+   ```
+
+2. **Start Frontend** (Terminal 2):
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+3. **Access Application**: Open `http://localhost:5173` in your browser
+
+#### Option 2: Cloud Run (Hosted)
+
+**Access Application**: Open the Cloud Run service URL in your browser
+   ```
+   https://permitflowai-frontend-XXXXX-uc.a.run.app
+   ```
+
+### Generate Permits
+
+1. **Select Work Order**: Click any work order from the dashboard
+2. **Generate**: Click "Generate Permits" button
+3. **Monitor Progress**: Watch the 4-step progress indicator (Hazards → Permits → Validation → Refinement)
+4. **Review Results**: 
+   - View identified hazards with confidence scores and evidence
+   - View generated permits with types and status
+   - Click "View Permits" to see the full list
+
+### View & Manage Permits
+
+1. **Permits List**: Filter by type, status, or validation status
+2. **Permit Details**: Click any permit to view:
+   - **Details Tab**: Edit controls, PPE, sign-offs
+   - **Validation Tab**: See errors, warnings, recommendations
+   - **Evidence Tab**: View RAG snippets and historical incidents
+3. **Approve**: Click the "Approve" button (if validation passes)
+
 ## 📊 Impact
 
 - **99% time reduction**: 4-8 hours → 2-5 minutes
